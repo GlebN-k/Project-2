@@ -1,5 +1,4 @@
 const btnFirstPage = document.getElementById("first-window__btn");
-const inputFirstPage = document.getElementById("name");
 const greetingUser = document.getElementById("greetings-user");
 const newItemBtn = document.getElementById("new-task-btn");
 const btnAddNewTask = document.getElementById("btn-add-new-task");
@@ -14,6 +13,8 @@ let userName;
 let arrayOfTasks = [];
 
 const getUserName = () => {
+  const inputFirstPage = document.getElementById("name");
+
   const firstWindow = document.getElementById("first-window");
   const secondWindow = document.getElementById("second-window");
   const greetings = document.getElementById("greetings-user");
@@ -23,9 +24,20 @@ const getUserName = () => {
   firstWindow.classList.toggle("first-window__hidden");
   secondWindow.classList.toggle("second-window__hidden");
   localStorage.setItem("user", userName);
-  console.log("im else")
   greetings.innerHTML = `Hello, ${userName}`;
-}
+};
+
+const checkUserName = () => {
+  if (localStorage.getItem("user") !== null) {
+    const greetings = document.getElementById("greetings-user");
+    const firstWindow = document.getElementById("first-window");
+    const secondWindow = document.getElementById("second-window");
+
+    firstWindow.classList.toggle("first-window__hidden");
+    secondWindow.classList.toggle("second-window__hidden");
+    greetings.innerHTML = `Hello, ${localStorage.getItem("user")}`;
+  }
+};
 
 const showInputNewTask = () => {
   // const newItemBtn = document.getElementById('new-task-btn')
@@ -113,15 +125,12 @@ const renderDoneTasks = () => {
 // to change status of the task
 const changeTaskStatus = (e) => {
   let taskId = e.target.closest("input").id;
-  console.log(taskId);
 
   const newArr = arrayOfTasks.map((task) =>
     task.name === taskId ? { ...task, status: "done" } : task
   );
   arrayOfTasks = newArr;
-  console.log(arrayOfTasks);
 };
-
 
 btnFirstPage.addEventListener("click", getUserName);
 
@@ -139,34 +148,6 @@ btnAllTasks.addEventListener("click", renderArrayOfTasks);
 
 containerTasks.addEventListener("click", changeTaskStatus);
 
-// window.addEventListener("load", getUserName);
+window.addEventListener("load", checkUserName);
 
 // localStorage.clear();
-
-
-
-// //   if (localStorage.length > 0) {
-//     console.log(localStorage.length)
-//     console.log(localStorage.getItem('user'))
-//     firstWindow.classList.toggle("first-window__hidden");
-//     secondWindow.classList.toggle("second-window__hidden");
-//     greetings.innerHTML = `Hello, ${localStorage.getItem("user")}`;
-//     console.log("im in if")
-
-//   } else {
-//     userName = inputFirstPage.value;
-
-//     // firstWindow.classList.toggle("first-window__hidden");
-//     // secondWindow.classList.toggle("second-window__hidden");
-//     localStorage.setItem("user", userName);
-//     console.log("im else")
-    //   console.log(localStorage.getItem('user'))
-    //   if()
-    //   if(localStorage.key('user'))
-    // greetings.innerHTML = `Hello, ${userName}`;
-  
-// };
-
-// const getUserName = () => {
-
-// }
